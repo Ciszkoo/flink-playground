@@ -1,9 +1,12 @@
 package com.ciszkoo
 
-import io.circe._
-import io.circe.parser._
+import scala.jdk.CollectionConverters.*
 
-case class User(id: String, name: String, age: Int, action: String)
+import io.circe.*
+import org.apache.flink.api.common.typeinfo.TypeInformation
+import org.apache.flink.api.serializers._
+
+case class User(user_id: String, name: String, age: Int, action: String)
 
 object User {
   def empty: User = User("", "", 0, "")
@@ -16,4 +19,6 @@ object User {
       action <- cursor.downField("action").as[String]
     } yield User(id, name, age, action)
   }
+
+  given userTypeInfo: TypeInformation[User] = deriveTypeInformation
 }

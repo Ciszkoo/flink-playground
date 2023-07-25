@@ -2,23 +2,24 @@ package com.ciszkoo
 
 import java.nio.charset.StandardCharsets
 
-import io.circe._
-import io.circe.parser._
+import io.circe.parser.*
 import org.apache.flink.api.common.typeinfo.TypeInformation
 import org.apache.flink.api.java.typeutils.TypeExtractor
 import org.apache.flink.streaming.connectors.kafka.KafkaDeserializationSchema
 import org.apache.kafka.clients.consumer.ConsumerRecord
+import com.typesafe.scalalogging.LazyLogging
 
-class UserDeserializer() extends KafkaDeserializationSchema[User] {
+class UserDeserializer() extends KafkaDeserializationSchema[User] with LazyLogging {
   def deserialize(record: ConsumerRecord[Array[Byte], Array[Byte]]): User = {
     val msg = String(record.value(), StandardCharsets.UTF_8)
 
     decode[User](msg) match {
       case Left(value)  => User.empty
-      case Right(value) => value
+      case Right(user) => {
+        logger.info(s"User deserialized: ${user}")
+        user
+      }
     }
-
-    // User.empty
   }
 
   def isEndOfStream(nextElement: User): Boolean = false

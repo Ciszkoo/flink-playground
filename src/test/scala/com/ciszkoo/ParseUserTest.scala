@@ -2,7 +2,7 @@ package com.ciszkoo
 
 import scala.io.Source
 
-import io.circe.parser._
+import io.circe.parser.*
 
 class ParseUserTest extends munit.FunSuite {
   test("Json parsing") {
@@ -12,6 +12,5 @@ class ParseUserTest extends munit.FunSuite {
       case Left(error)   => fail("Failed to parse json", error)
       case Right(result) => assert(result == User("US_1", "Adam", 23, "logged_in"))
     }
-
   }
 }
