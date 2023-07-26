@@ -1,10 +1,8 @@
 package com.ciszkoo
 
-import scala.jdk.CollectionConverters.*
-
 import io.circe.*
 import org.apache.flink.api.common.typeinfo.TypeInformation
-import org.apache.flink.api.serializers._
+import org.apache.flink.api.serializers.*
 
 case class User(user_id: String, name: String, age: Int, action: String)
 

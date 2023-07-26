@@ -1,8 +1,8 @@
 package com.ciszkoo
 
-import org.apache.flink.api.StreamExecutionEnvironment
-import com.typesafe.scalalogging.StrictLogging
 import com.typesafe.config.ConfigFactory
+import com.typesafe.scalalogging.StrictLogging
+import org.apache.flink.api.StreamExecutionEnvironment
 
 object Application {
   def main(args: Array[String]): Unit = {

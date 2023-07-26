@@ -1,8 +1,7 @@
 package com.ciszkoo
 
+import org.apache.flink.api.{DataStream, StreamExecutionEnvironment}
 import org.apache.flink.api.common.eventtime.WatermarkStrategy
-import org.apache.flink.api.DataStream
-import org.apache.flink.api.StreamExecutionEnvironment
 import org.apache.flink.connector.kafka.source.reader.deserializer.KafkaRecordDeserializationSchema
 import org.apache.flink.connector.kafka.source.KafkaSource
 
@@ -18,7 +17,7 @@ class Job()(using env: StreamExecutionEnvironment, settings: Settings) {
 
   val kafkaStream: DataStream[User] = env.fromSource(kafkaSource, WatermarkStrategy.noWatermarks(), "Kafka Source")
 
-  val pipeline = Pipeline(kafkaStream).pipeline
+  val pipeline = Pipeline(kafkaStream).keyedPipeline
 
   val sink = pipeline.print()
 }
